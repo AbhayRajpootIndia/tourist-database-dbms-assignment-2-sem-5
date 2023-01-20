@@ -1,0 +1,243 @@
+create table location
+(
+citypin int primary key,
+cityname varchar(30)
+);
+
+-------------------------------------------------------------
+
+create table hotels
+(
+hotelid int primary key,
+hotelname varchar(30),
+Dining varchar(30),
+Roomcategory varchar(30),
+Areacode varchar(30),
+citypin int,
+foreign key(citypin) references location(citypin)
+);
+
+
+---------------------------------------------------------------
+
+
+create table hotspots
+(
+citypin int,
+areaname varchar(30),
+hotelid int,
+openingtime int,
+closingtime int,
+hotspotname varchar(30),
+foreign key(citypin) references location(citypin),
+foreign key(hotelid) references hotels(hotelid)
+);
+
+
+
+----------------------------------------------------------------------
+
+create table rentals
+(
+companyname varchar(30),
+veichletype varchar(30),
+price int,
+rentalid int,
+veichlemodel  varchar(30) DEFAULT 'Activa',
+citypin int,
+foreign key(citypin) references location(citypin)
+);
+
+
+
+--------------------------------------------------------------------------
+
+create table utilitystore
+(
+utilname varchar(30),
+type varchar(30),
+openhrs varchar(10),
+hotelid int,
+area varchar(30),
+foreign key(hotelid) references hotels(hotelid),
+Check(openhrs >=10)
+);
+
+ 
+
+---------------- LOCATION VALUES -------------------
+
+INSERT INTO location
+VALUES (400001, 'Mumbai');
+
+INSERT INTO location
+VALUES (110001, 'New Delhi');
+
+INSERT INTO location
+VALUES (560047, 'Bangalore');
+
+INSERT INTO location
+VALUES (482004, 'Jabalpur');
+
+INSERT INTO location
+VALUES (208012, 'Kanpur');
+
+
+---------------------- HOTELS -------------------------
+
+
+INSERT INTO hotels
+VALUES (1001, 'Raj Residencies', 'Available', '2 Bed, 3 Beds', '2001', 400001);
+
+INSERT INTO hotels
+VALUES (1002, 'Taj Hotels', 'Available', '3 Bed, 4 Beds', '2002', 110001);
+
+INSERT INTO hotels
+VALUES (1003, 'John Hotels', 'Not-Available', '1 Bed, 2 Beds, Kids', '2003', 560047);
+
+INSERT INTO hotels
+VALUES (1004, 'Deepti Hotels', 'Available', '1 Bed, 2 Beds, Kids', '2004', 482004);
+
+INSERT INTO hotels
+VALUES (1005, 'Somesh Residencies', 'Available', '1 Bed, 2 Beds, Kids', '2005', 208012);
+
+
+
+----------------- HOTSPOTS VALUES -------------------
+
+INSERT INTO HOTSPOTS
+VALUES (110001, '2002', 1002, 7, 21, 'Taj Mahal');
+
+INSERT INTO HOTSPOTS
+VALUES (400001, '2001', 1001, 7, 22, 'Palm  Beach');
+
+INSERT INTO HOTSPOTS
+VALUES (560047, '2003', 1003, 8, 19, 'Prakash Amusement Park');
+
+INSERT INTO HOTSPOTS
+VALUES (482004, '2004', 1004, 10, 20, 'Shree Ram Mandir');
+
+INSERT INTO HOTSPOTS
+VALUES (208012, '2005', 1005, 10, 20, 'National Park');
+
+
+------------------------- RENTAL VALUES -----------------------------------------------
+
+INSERT INTO rentals
+VALUES ('Bounce', 'Two-Wheeler', 900, 3001, 'Activa-125', 400001);
+
+INSERT INTO rentals
+VALUES ('Zoom', 'Two-Wheeler', 1500, 3002, 'Pulsar', 110001,);
+
+INSERT INTO rentals
+VALUES ('Vogo', 'Two-Wheeler', 600, 3003, 'Activa-5G', 560047);
+
+INSERT INTO rentals
+VALUES ('Ola', 'Two-Wheeler', 1200, 3004, 'Splender', 482004);
+
+INSERT INTO rentals
+VALUES ('Uber', 'Two-Wheeler', 800, 3005, 'Activa', 208012);
+
+
+
+
+---------------- UTILITY STORE VALUES -------------------------------------
+
+INSERT INTO utilitystore
+VALUES ('Ram Medicals', 'Medical Store', '24', 1001, '2001');
+
+INSERT INTO utilitystore
+VALUES ('Radha Electricals', 'Electricals Store', '12', 1002, '2002');
+
+INSERT INTO utilitystore
+VALUES ('Somesh Electricals', 'Electricals Store', '12', 1003, '2003');
+
+INSERT INTO utilitystore
+VALUES ('Meena Medicals', 'Medical Store', '24', 1004, '2004');
+
+INSERT INTO utilitystore
+VALUES ('Seema Medicals', 'Medical Store', '24', 1005, '2005');
+
+
+------------------------------- DISPLAY ALL TABLES ------------------------------
+
+SELECT * FROM location;
+
+SELECT * FROM hotels;
+
+SELECT * FROM hotspots;
+
+SELECT * FROM rentals;
+
+SELECT * FROM utilitystore;
+
+----------------------------------------------------------------------------------------------
+
+1)
+
+Select hotelname from hotels where dining='Available';
+
+
+----------------------------------------------------------------------------------------------
+
+2)
+
+Select C.cityname, R.companyname from location C, rentals R where C.citypin=R.citypin;
+
+
+
+------------------------------------------------------------------------------------------------
+
+
+3)
+
+Select H.hotspotname from hotspots H, location L where H.citypin=L.citypin and L.cityname='Bangalore';
+
+
+------------------------------------------------------------------------------------------------------------------
+
+
+4)
+
+Select U.type from utilitystore U, hotels H where U.hotelid=H.hotelid and H.hotelname='Taj Hotels';
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+5)
+
+INSERT INTO utilitystore
+VALUES ('Assertion Test', 'Medical Store', '6', 1005, '2005');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
